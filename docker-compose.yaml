@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  front1:
+    image: front
+    build: ./front
+    container_name: front1
+
+  front2:
+    image: front
+    build: ./front
+    container_name: front2
+
+  reminders:
+    image: reminders
+    build: ./reminders
+    container_name: reminders
+    ports:
+      - ${REMINDERS_PORT}:8080
+    depends_on:
+      - redis
+
+  users:
+    image: users
+    build: ./rest_test
+    container_name: users
+    ports:
+      - ${USERS_PORT}:8080
+
+  calendars:
+    image: calendars
+    build: ./rest_test
+    container_name: calendars
+    ports:
+      - ${CALENDARS_PORT}:8080
+
+  redis:
+    image: redis
+    container_name: redis
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+
+  varnish-front:
+    image: varnish:7.0
+    container_name: varnish
+    volumes:
+      - ./varnish:/etc/varnish:ro
+    ports:
+      - 3000:80
+    depends_on:
+      - front1
+      - front2
