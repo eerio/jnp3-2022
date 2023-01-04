@@ -22,10 +22,14 @@ services:
 
   users:
     image: users
-    build: ./rest_test
+    build: ./users
     container_name: users
     ports:
       - ${USERS_PORT}:8080
+    environment:
+      CONFIG_MONGO_ADMINUSERNAME: ${MONGO_USERNAME}
+      CONFIG_MONGO_ADMINPASSWORD: ${MONGO_PASSWORD}
+      CONFIG_MONGO_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/
 
   calendars:
     image: calendars
@@ -33,6 +37,13 @@ services:
     container_name: calendars
     ports:
       - ${CALENDARS_PORT}:8080
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
 
   redis:
     image: redis
