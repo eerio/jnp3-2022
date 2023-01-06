@@ -9,14 +9,13 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   console.log('got hit: SIGNUP');
   const user = new User({
-    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
   });
 
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).json({ err: [err] });
       return;
     }
 
@@ -27,36 +26,36 @@ exports.signup = (req, res) => {
         },
         (err, roles) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({ err: [err] });
             return;
           }
 
           user.roles = roles.map((role) => role._id);
           user.save((err) => {
             if (err) {
-              res.status(500).send({ message: err });
+              res.status(500).json({ err: [err] });
               return;
             }
 
-            res.send({ message: "User was registered successfully!" });
+            res.status(200).json({ message: "User was registered successfully!" });
           });
         }
       );
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(500).json({ err: [err] });
           return;
         }
 
         user.roles = [role._id];
         user.save((err) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({err: [err] });
             return;
           }
 
-          res.send({ message: "User was registered successfully!" });
+          res.status(200).json({ message: "User was registered successfully!" });
         });
       });
     }
@@ -66,17 +65,17 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   console.log('got hit: SIGNIN');
   User.findOne({
-    username: req.body.username,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).json({ err: [err] });
         return;
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(400).json({ err: ["User Not found."] });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -85,7 +84,7 @@ exports.signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({ message: "Invalid Password!" });
+        return res.status(400).json({ err: ["Invalid Password!"] });
       }
 
       var token = jwt.sign({ id: user.id }, config.secret, {
@@ -99,10 +98,9 @@ exports.signin = (req, res) => {
       }
 
       req.session.token = token;
-
-      res.status(200).send({
+      res.status(200).json({
+        token: token,
         id: user._id,
-        username: user.username,
         email: user.email,
         roles: authorities,
       });
@@ -113,7 +111,7 @@ exports.signout = async (req, res) => {
   console.log('got hit: SIGNOUT');
   try {
     req.session = null;
-    return res.status(200).send({ message: "You've been signed out!" });
+    return res.status(200).json({ message: "You've been signed out!" });
   } catch (err) {
     this.next(err);
   }
