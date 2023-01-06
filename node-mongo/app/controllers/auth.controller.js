@@ -7,6 +7,7 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
+  console.log('got hit: SIGNUP');
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -63,6 +64,7 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
+  console.log('got hit: SIGNIN');
   User.findOne({
     username: req.body.username,
   })
@@ -108,6 +110,7 @@ exports.signin = (req, res) => {
 };
 
 exports.signout = async (req, res) => {
+  console.log('got hit: SIGNOUT');
   try {
     req.session = null;
     return res.status(200).send({ message: "You've been signed out!" });
