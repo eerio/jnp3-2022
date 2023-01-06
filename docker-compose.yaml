@@ -27,9 +27,9 @@ services:
     ports:
       - ${USERS_PORT}:8080
     environment:
-      CONFIG_MONGO_ADMINUSERNAME: ${MONGO_USERNAME}
-      CONFIG_MONGO_ADMINPASSWORD: ${MONGO_PASSWORD}
-      CONFIG_MONGO_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/forgetmenot_db
+      CONFIG_MONGO_ADMINUSERNAME: "${MONGO_USERNAME}"
+      CONFIG_MONGO_ADMINPASSWORD: "${MONGO_PASSWORD}"
+      CONFIG_MONGO_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/forgetmenot_db"
 
   calendars:
     image: calendars
@@ -42,8 +42,9 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
+      MONGO_INITDB_DATABASE: "forgetmenot_db"
 
   redis:
     image: redis
