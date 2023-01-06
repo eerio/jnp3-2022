@@ -22,14 +22,14 @@ services:
 
   users:
     image: users
-    build: ./users
+    build: ./node-mongo
     container_name: users
     ports:
       - ${USERS_PORT}:8080
     environment:
       CONFIG_MONGO_ADMINUSERNAME: ${MONGO_USERNAME}
       CONFIG_MONGO_ADMINPASSWORD: ${MONGO_PASSWORD}
-      CONFIG_MONGO_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/
+      CONFIG_MONGO_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/forgetmenot_db
 
   calendars:
     image: calendars

@@ -28,29 +28,8 @@ const ex_calendars = [
     }
 ]
 
-app.post('/api/register/',(req, res) => {
-    if (req.body.firstName === 'Adam') {
-        res.status(200).json({});
-    } else {
-        res.status(400).json({err: ['Wrong name byatch']});
-    }
-});
-
-app.post('/api/login/',(req, res) => {
-    console.log('got hit login');
-    if (req.body.email === 'goodemail') {
-        res.status(200).json({token: `${req.body.password}`});
-    } else {
-        res.status(400).json({err: ['Wrong email byatch']});
-    }
-});
-
-app.get('/api/user_id/',(req, res) => {
-    console.log('got hit user_id');
-    res.json({userId: Number(req.get('Authorization'))});
-});
-
 app.get('/api/calendars/',(req, res) => {
+    console.log('got hit calendars');
     res.status(200).json({calendars: ex_calendars});
 });
 
