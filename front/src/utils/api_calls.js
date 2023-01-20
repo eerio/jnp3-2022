@@ -65,7 +65,7 @@ body (has header AUTHORIZATION=TOKEN):
 return:
 whatevs, but return sth
 */
-const addCalendar = (data) => makeAPiCall(data, `${process.env.REACT_APP_CALENDARS_URL}/add-calendar`, 'POST');
+const addCalendar = (data) => makeAPiCall(data, `${process.env.REACT_APP_CALENDARS_URL}/api/add-calendar`, 'POST');
 
 /*
 body (has header AUTHORIZATION=TOKEN):
@@ -75,7 +75,7 @@ body (has header AUTHORIZATION=TOKEN):
 return:
 just return anything
 */
-const deleteCalendars = (data) => makeAPiCall(data, `${process.env.REACT_APP_CALENDARS_URL}/delete-calendar`, 'POST');
+const deleteCalendars = (data) => makeAPiCall(data, `${process.env.REACT_APP_CALENDARS_URL}/api/delete-calendar`, 'POST');
 
 /*
 body has header =||=:
