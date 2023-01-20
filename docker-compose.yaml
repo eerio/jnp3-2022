@@ -22,7 +22,7 @@ services:
 
   users:
     image: users
-    build: ./node-mongo
+    build: ./users
     container_name: users
     ports:
       - ${USERS_PORT}:8080
@@ -33,7 +33,7 @@ services:
 
   calendars:
     image: calendars
-    build: ./rest_test
+    build: ./calendars
     container_name: calendars
     ports:
       - ${CALENDARS_PORT}:8080
