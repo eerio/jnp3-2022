@@ -36,7 +36,8 @@ const register = (data) => makeAPiCall(data, `${process.env.REACT_APP_USERS_URL}
  */
 const authenticate = (data) => makeAPiCall(data, `${process.env.REACT_APP_USERS_URL}/api/login`, 'POST');
 
-const logout = (data) => makeAPiCall(data, `${process.env.REACT_APP_USERS_URL}/api/logout`, 'POST');
+// const logout = (data) => makeAPiCall(data, `${process.env
+// .REACT_APP_USERS_URL}/api/logout`, 'POST');
 /*
 body (HAS HEADER AUTHENTICATE=TOKEN):
 blank
