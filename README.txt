@@ -1,3 +1,7 @@
+docker exec -it ecbed01 sh -l
+docker cp ecbed01a8919:/app/package-lock.json calendars/package-lock.json 
+
+
 Aplikacja-niezapominajka do wysyłania powiadomień 
 4 mikroserwisy:
 - forgetmenot (public): frontend

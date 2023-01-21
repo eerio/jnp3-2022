@@ -5,9 +5,11 @@ FROM node:19-alpine3.16
 WORKDIR /app
 
 # install app dependencies
-COPY . ./
+COPY ./package.json ./package.json
+COPY ./package-lock.json ./package-lock.json
 RUN npm ci
 
+COPY . ./
 # expose port
 EXPOSE 8080
 

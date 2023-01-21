@@ -1,6 +1,7 @@
 import express from 'express';
 import Redis from 'ioredis';
 import getUserId from '../utils/getUserId.js';
+import ical from 'node-ical';
 
 const apiRouter = express.Router();
 
@@ -22,6 +23,8 @@ apiRouter.get('/calendars/', async (req, res) => {
 
 apiRouter.post('/add-calendar/', async (req, res) => {
   console.log('Got hit: add calendar', req.body);
+  const events = await ical.async.fromURL(req.body.url);
+  console.log('events:', events);
   /*
   try {
     const {

@@ -1,0 +1,20 @@
+curl 'http://localhost:10002/api/add-calendar' \
+  -H 'Accept: application/json' \
+  -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2MwYWFiMWE5ZjJhZDAzM2E0YjUzYSIsImlhdCI6MTY3NDMxOTIyMSwiZXhwIjoxNjc0NDA1NjIxfQ.t5T_ArQMJti2kI7_yq9CDZM4j1-74WQQpFotWXM2g4E' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: application/json' \
+  -H 'DNT: 1' \
+  -H 'Origin: http://localhost:3000' \
+  -H 'Pragma: no-cache' \
+  -H 'Referer: http://localhost:3000/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Not_A Brand";v="99", "Google Chrome";v="109", "Chromium";v="109"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  --data-raw '{"name":"kalendarz-adam","url":"https://usosapps.uw.edu.pl/services/tt/upcoming_ical?lang=pl&user_id=397979&key=hdjskDSswyeG3WhFQY35","ttl":"5"}' \
+  --compressed
