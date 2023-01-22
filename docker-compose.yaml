@@ -19,6 +19,8 @@ services:
       - ${REMINDERS_PORT}:8080
     depends_on:
       - redis
+    env_file: 
+      - .env
 
   users:
     image: users
@@ -37,6 +39,8 @@ services:
     container_name: calendars
     ports:
       - ${CALENDARS_PORT}:8080
+    env_file: 
+      - .env
 
   mongo:
     image: mongo

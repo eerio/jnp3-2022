@@ -5,6 +5,8 @@ import ical from 'node-ical';
 
 const apiRouter = express.Router();
 
+const client = new Redis({ host: process.env.REDIS_HOST || 'redis', port: 6379 });
+
 function httpResponse(res, data) {
   const statusCode = data.ok ? 200 : 400;
   res.status(statusCode).send(data);
@@ -13,7 +15,7 @@ function httpResponse(res, data) {
 apiRouter.get('/calendars/', async (req, res) => {
   console.log('Got hit: GET calendars');
   try {
-    const userId = await getUserId(undefined, req.get('Authorization'));
+    const userId = await getUserId(client, req.get('Authorization'));
     console.log(userId);
     const userReminders = await manager.get_reminders(userId);
 

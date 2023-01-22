@@ -1,7 +1,7 @@
 curl 'http://localhost:10002/api/add-calendar' \
   -H 'Accept: application/json' \
   -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
-  -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2MwYWFiMWE5ZjJhZDAzM2E0YjUzYSIsImlhdCI6MTY3NDMxOTIyMSwiZXhwIjoxNjc0NDA1NjIxfQ.t5T_ArQMJti2kI7_yq9CDZM4j1-74WQQpFotWXM2g4E' \
+  -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2M3YmVlMDIyZTllMmU5NzQxYWQ2MSIsImlhdCI6MTY3NDM0NTcwMCwiZXhwIjoxNjc0NDMyMTAwfQ.Mt9z_ML_wr8yxgbUJCd-wslCOJ2Yak5RESCNtq9Crzw' \
   -H 'Cache-Control: no-cache' \
   -H 'Connection: keep-alive' \
   -H 'Content-Type: application/json' \
