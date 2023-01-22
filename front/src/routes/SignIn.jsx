@@ -118,7 +118,7 @@ export default function SignIn({ setToken }) {
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  Don&apost have an account? Sign Up
+                  Don&apos;t have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
