@@ -41,15 +41,21 @@ async function getAllCloseEvents(calendarId, userId, url, ttl, token, close=8640
         if (!event.rrule) {
           console.log('Non recurrent event:', event.summary);
           //console.log(new Date() < event.start, event.start < new Date().getTime() + close, event.start, new Date().getTime() + close); 
-          if (new Date() < event.start && event.start < new Date().getTime() + ttl * 1000) {
-            events.push({description: event.description, name: event.summary, date: event.start});
+          // TODO: WYWALIC TUTAJ TEN  '- close' - to jest tylko zeby pokazywalo moj recurrent event z ZPP
+          // u dolu jest ten sam kod do dodawania recurrent!!
+          if (new Date().getTime() - close  < event.start && event.start < new Date().getTime() + ttl * 1000) {
+            console.log('Adding reminder!');
+        await makeApiCall(
+          {calendarId:calendarId, userId:userId, reminderName:event.summary, description:event.description, date:event.begin},
+          'http://reminders:8080/api/add-reminder/', token, 'POST'
+        );
           }
           continue;
         };
       console.log('Recurrent event:', event.summary);
         
         //console.log(' get between:', new Date(), new Date((new Date().getTime()) + close));
-        const dates = event.rrule.between(new Date(), new Date((new Date().getTime()) + close));
+        const dates = event.rrule.between(new Date((new Date().getTime()) - close), new Date((new Date().getTime()) + close));
       //console.log('Dates:', dates);
         if (dates.length === 0) continue;
 
@@ -77,8 +83,9 @@ async function getAllCloseEvents(calendarId, userId, url, ttl, token, close=8640
             //console.log('Recurrence start:', start)
           
           //console.log(new Date() < start, start < new Date().getTime() + ttl * 1000);
-          //console.log(events);
-          if (new Date() < start && start < new Date().getTime() + ttl * 1000) {
+          console.log('event:', start);
+          //if (new Date() < start && start < new Date().getTime() + ttl * 1000) {
+          if (new Date().getTime() - close  < event.start && event.start < new Date().getTime() + ttl * 1000) {
             return {description: event.description, name: event.summary, date: start};
           }
           //console.log(events);
@@ -86,12 +93,12 @@ async function getAllCloseEvents(calendarId, userId, url, ttl, token, close=8640
         });
       //console.log('events:', events)
       //events = events.concat(small_events);
-      //console.log('events:', events)
       
       const current_reminders = await makeApiCall(undefined, 'http://reminders:8080/api/list-reminders-soft/', token);
       console.log('current reminders:', current_reminders);
       for (let ev of small_events) {
        if (!ev) { continue; } 
+        console.log('Adding reminder:', ev.name);
         await makeApiCall(
           {calendarId:calendarId, userId:userId, reminderName:ev.name, description:ev.description, date:ev.date},
           'http://reminders:8080/api/add-reminder/', token, 'POST'

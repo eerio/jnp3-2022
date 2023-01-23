@@ -58,12 +58,12 @@ apiRouter.get('/list-reminders/', async (req, res) => {
 apiRouter.post('/add-reminder/', async (req, res) => {
   try {
     console.log('add-reminer: body=', req.body);
-    const dat = JSON.parse(req.body);
-    //const {
-    //  calendarId, userId, reminderName, description, date,
-    //} = req.body;
+    const {
+      calendarId, userId, reminderName, description, date,
+    } = req.body;
+    console.log(calendarId, userId, reminderName);
 
-    const result = await manager.create_reminder(dat.userId, dat.calendarId, dat.description, dat.reminderName, dat.date);
+    const result = await manager.create_reminder(userId, calendarId, description, reminderName, date);
     console.log('hit add reminder');
 
     httpResponse(res, result);
