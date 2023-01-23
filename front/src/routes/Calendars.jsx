@@ -9,7 +9,7 @@ import AddCalendar from '../utils/AddCalendar';
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'url', headerName: 'URL', width: 130 },
-  { field: 'name', headerName: 'name', width: 130 },
+  { field: 'calendarName', headerName: 'name', width: 130 },
   { field: 'ttl', headerName: 'time before reminding', width: 150 },
 ];
 
@@ -17,7 +17,12 @@ export default function Calendars() {
   const [selectedIds, setSelectedIds] = useState();
   const [rows, setRows] = useState([]);
 
-  const fetchData = () => fetchCalendars().then((res) => setRows(res.calendars));
+  const fetchData = () => fetchCalendars().then((res) => setRows(res.calendars.map((x) => ({
+    id: x.calendarId,
+    url: x.calendarUrl,
+    calendarName: x.calendarName,
+    ttl: x.ttl,
+  }))));
 
   useEffect(() => {
     fetchData();

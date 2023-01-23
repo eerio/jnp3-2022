@@ -30,7 +30,7 @@ apiRouter.get('/calendars/', async (req, res) => {
     const userReminders = await manager.get_calendars(userId);
     console.log('Listing calendars:', userReminders);
 
-    httpResponse(res, {'calendars': userReminders.calendars});
+    httpResponse(res, userReminders);
   } catch (err) { console.log(err); res.status(500).send(); }
 });
 
@@ -60,7 +60,7 @@ apiRouter.post('/add-calendar/', async (req, res) => {
     }
     */
     
-    httpResponse(res, {'calendars': userReminders.calendars});
+    httpResponse(res, userReminders);
   } catch (error) {
     res.status(500).send();
   }
