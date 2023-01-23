@@ -6,14 +6,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function CardData({ reminderName = 'name', date = 'date', description = 'description' }) {
+function CardData({ name = 'name', date = 'date', description = 'description' }) {
   return (
     <CardContent>
       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
         Upcoming event!
       </Typography>
       <Typography variant="h5" component="div">
-        {reminderName}
+        {name}
       </Typography>
       <Typography sx={{ mb: 1.5 }} color="text.secondary">
         {date}
