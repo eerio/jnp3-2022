@@ -21,6 +21,8 @@ services:
       - redis
     env_file: 
       - .env
+    volumes:
+      - remindersdata:/data
 
   users:
     image: users
@@ -41,6 +43,8 @@ services:
       - ${CALENDARS_PORT}:8080
     env_file: 
       - .env
+    volumes:
+      - calendarsdata:/data
 
   mongo:
     image: mongo
@@ -72,3 +76,8 @@ services:
     depends_on:
       - front1
       - front2
+
+volumes:
+  calendarsdata:
+  remindersdata:
+

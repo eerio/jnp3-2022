@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 
-const DATABASE_PATH = 'db';
+const DATABASE_PATH = '/data/db';
 
 // SQL
 const CREATE_DATABASE = `CREATE TABLE IF NOT EXISTS reminders 
