@@ -116,3 +116,16 @@ exports.signout = async (req, res) => {
     this.next(err);
   }
 };
+
+exports.getUserId = async (req, res) => {
+  console.log('got hit: getUserId', req.get('Authorization'))
+  try {
+    const decoded = jwt.verify(req.get('Authorization'), config.secret);
+    const userId = decoded.id;
+    console.log('Verification ok; user id: ', userId);
+    return res.status(200).json({ userId: userId });
+  } catch (err) {
+    console.log('Verification failed:', err);
+    return res.status(400).json({ err: ["Unable to verify."] });
+  }
+};

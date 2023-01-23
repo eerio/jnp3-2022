@@ -24,9 +24,28 @@ apiRouter.get('/calendars/', async (req, res) => {
 });
 
 apiRouter.post('/add-calendar/', async (req, res) => {
-  console.log('Got hit: add calendar', req.body);
-  const events = await ical.async.fromURL(req.body.url);
-  console.log('events:', events);
+  console.log('Got hit: add calendar, jwt:', req.get('Authorization'));
+  try {
+    const userId = await getUserId(client, req.get('Authorization'));
+    if (!userId) {
+      console.log('Verification failed!');
+      res.status(500).send();
+    }
+
+    console.log('User verified. User ID:', userId);
+
+    const events = await ical.async.fromURL(req.body.url);
+
+    for (const [key, value] of Object.entries(events)) {
+      const userId = req.session.id;
+      const payload = [value.uid, userId, value.summary, value.description, value.start];
+      console.log('adding reminder:', payload);
+      break;
+    }
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
   /*
   try {
     const {

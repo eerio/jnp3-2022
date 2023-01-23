@@ -30,8 +30,5 @@ module.exports = function(app) {
     "/api/logout",
     controller.signout);
 
-  app.get('/api/user_id/',(req, res) => {
-      console.log('got hit user_id');
-      res.json({userId: Number(req.get('Authorization'))});
-  });
+  app.get('/api/user_id/', controller.getUserId);
 };
