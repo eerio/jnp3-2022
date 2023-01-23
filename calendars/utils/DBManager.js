@@ -4,32 +4,25 @@ import { open } from 'sqlite';
 const DATABASE_PATH = 'db';
 
 // SQL
-const CREATE_DATABASE = `CREATE TABLE IF NOT EXISTS reminders 
+const CREATE_DATABASE = `CREATE TABLE IF NOT EXISTS calendars 
                         (
-                            reminderId INTEGER PRIMARY KEY AUTOINCREMENT,
-                            calendarId INTEGER,
-                            userId INTEGER, 
-                            description TEXT,
+                            calendarId INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT,
-                            date TEXT
+                            calendarUrl TEXT,
+                            ttl INTEGER,
+                            userId TEXT
                         );`;
 
-const ADD_REMINDER = `INSERT INTO reminders (calendarId, userId, description, name,  date) 
-                         VALUES (?, ?, ?, ?, ?);`;
+const ADD_CALENDAR = `INSERT INTO calendars (name, calendarUrl, ttl, userId) 
+                         VALUES (?, ?, ?, ?);`;
 
-const GET_REMINDERS_USER = `SELECT * FROM reminders 
+const GET_CALENDARS_USER = `SELECT * FROM calendars 
                          WHERE userId = ? 
-                         ORDER BY reminderId DESC 
+                         ORDER BY calendarId DESC 
                          LIMIT ?`;
 
-const DELETE_REMINDER_ID = `DELETE FROM reminders 
-                         WHERE reminderId = ? AND userId = ?`;
-
-const DELETE_OLD_REMINDERS = `DELETE FROM reminders 
-                          WHERE DATE(date) < DATE(?)`;
-
-const DELETE_CALENDARS_REMINDERS = `DELETE FROM reminders 
-                          WHERE calendarId = ?`;
+const DELETE_CALENDAR_ID = `DELETE FROM calendars 
+                         WHERE calendarId = ? AND userId = ?`;
 
 class DBManager {
   async init_db() {
@@ -45,24 +38,16 @@ class DBManager {
     }
   }
 
-  async create_reminder(userId, calendarId, description, name, date) {
-    return this.db_run(ADD_REMINDER, [userId, calendarId, description, name, date]);
+  async add_calendar(name, calendarUrl, ttl, userId) {
+    return this.db_run(ADD_CALENDAR, [name, calendarUrl, ttl, userId]);
   }
 
-  async get_reminders(userId, limit = 25) {
-    return this.db_run(GET_REMINDERS_USER, [userId, limit], 'reminders');
+  async get_calendars(userId, limit = 25) {
+    return this.db_run(GET_CALENDARS_USER, [userId, limit], 'calendars');
   }
 
-  async delete_reminder(reminderId, userId) {
-    return this.db_run(DELETE_REMINDER_ID, [reminderId, userId]);
-  }
-
-  async delete_reminders_before(currentDate) {
-    return this.db_run(DELETE_OLD_REMINDERS, [currentDate]);
-  }
-
-  async delete_calendars_reminders(calendarId) {
-    return this.db_run(DELETE_CALENDARS_REMINDERS, [calendarId]);
+  async delete_calendar(calendarId, userId) {
+    return this.db_run(DELETE_CALENDAR_ID, [calendarId, userId]);
   }
 }
 
