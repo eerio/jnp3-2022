@@ -14,7 +14,7 @@ const getUserId = async (redisClient, token) => {
   const cachedId = await redisClient.get(token);
 
   if (!cachedId) {
-    const res = await makeApiCall(undefined, 'http://users:8080/api/user_id/', token);
+    const res = await makeApiCall(undefined, `http://users:8080/api/user_id/`, token);
     const { userId } = res;
 
     redisClient.setex(token, REDIS_EXPIRE, userId);

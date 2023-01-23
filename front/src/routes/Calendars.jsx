@@ -20,7 +20,7 @@ export default function Calendars() {
   const fetchData = () => fetchCalendars().then((res) => setRows(res.calendars.map((x) => ({
     id: x.calendarId,
     url: x.calendarUrl,
-    calendarName: x.calendarName,
+    calendarName: x.calendarName || x.name,
     ttl: x.ttl,
   }))));
 
