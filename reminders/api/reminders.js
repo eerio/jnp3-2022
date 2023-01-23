@@ -82,6 +82,7 @@ apiRouter.post('/delete-reminder/', async (req, res) => {
 
 apiRouter.get('/delete-old-reminders/', async (req, res) => {
   try {
+    console.log('got delete');
     const currentDate = (new Date()).toISOString().split('T')[0];
 
     const result = await manager.delete_reminders_before(currentDate);

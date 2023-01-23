@@ -141,6 +141,8 @@ apiRouter.get('/refresh/', async (req, res) => {
       const cal_events = await getAllCloseEvents(cal.calendarId, userId, cal.calendarUrl, cal.ttl, req.get('Authorization'))
       return cal_events;
     }));
+    console.log('here');
+    makeApiCall(undefined, 'http://reminders:8080/api/delete-old-reminders/', "123", 'GET');
 
     res.status(200).json({'ok': true});
   } catch (err) { console.log(err); res.status(500).send(); }
@@ -182,6 +184,7 @@ apiRouter.post('/delete-calendar/', async (req, res) => {
     
     req.body.ids.forEach(async (value) => {
       const result = await manager.delete_calendar(value, userId);
+      makeApiCall({calendarId: value}, 'http://reminders:8080/api/delete-calendars-reminders/', "123", 'POST');
     });
     const userReminders = await manager.get_calendars(userId);
     console.log('Listing calendars:', userReminders);

@@ -8,7 +8,7 @@ const CREATE_DATABASE = `CREATE TABLE IF NOT EXISTS reminders
                         (
                             reminderId INTEGER PRIMARY KEY AUTOINCREMENT,
                             calendarId INTEGER,
-                            userId INTEGER, 
+                            userId TEXT, 
                             description TEXT,
                             name TEXT,
                             date TEXT
@@ -46,7 +46,7 @@ class DBManager {
   }
 
   async create_reminder(userId, calendarId, description, name, date) {
-    return this.db_run(ADD_REMINDER, [userId, calendarId, description, name, date]);
+    return this.db_run(ADD_REMINDER, [calendarId, userId, description, name, date]);
   }
 
   async get_reminders(userId, limit = 25) {
